@@ -3,7 +3,7 @@
 Pod::Spec.new do |s|
 
     s.name         = "JDObjectDealloc"
-    s.version      = '0.0.5' 
+    s.version      = '0.0.1' 
     s.summary      = "JDObjectDealloc"
 
     s.description  = <<-DESC
