@@ -9,28 +9,28 @@
 #import "NSObject+JDDeallocBlock.h"
 
 
-@protocol JDDictionaryDeallocWrapperDelegate <NSObject>
+@protocol JDDictionaryWeakReferenceWrapperDelegate <NSObject>
 - (void)objectWillDealloc:(id)object forKey:(id<NSCopying>)key;
 @end
 
 
-@interface JDDictionaryDeallocWrapper : NSObject
+@interface JDDictionaryWeakReferenceWrapper : NSObject
 @property (nonatomic, weak) id object;
 @property (nonatomic, copy) id key;
-@property (nonatomic, weak) id<JDDictionaryDeallocWrapperDelegate> delegate;
+@property (nonatomic, weak) id<JDDictionaryWeakReferenceWrapperDelegate> delegate;
 - (instancetype)initWithWeakObject:(id)object
                             forKey:(id<NSCopying>)key
-                          delegate:(id<JDDictionaryDeallocWrapperDelegate>)delegate;
+                          delegate:(id<JDDictionaryWeakReferenceWrapperDelegate>)delegate;
 @end
 
-@implementation JDDictionaryDeallocWrapper
+@implementation JDDictionaryWeakReferenceWrapper
 - (instancetype)initWithWeakObject:(id)object
                             forKey:(id<NSCopying>)key
-                          delegate:(id<JDDictionaryDeallocWrapperDelegate>)delegate {
+                          delegate:(id<JDDictionaryWeakReferenceWrapperDelegate>)delegate {
     if (self = [super init]) {
         self.object = object;
         self.delegate = delegate;
-        __weak JDDictionaryDeallocWrapper *weakSelf = self;
+        __weak JDDictionaryWeakReferenceWrapper *weakSelf = self;
         [self.object jd_executeAtDealloc:^{
             if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(objectWillDealloc:forKey:)]) {
                 [weakSelf.delegate objectWillDealloc:weakSelf forKey:weakSelf.key];
@@ -42,12 +42,12 @@
 @end
 
 
-@interface JDMutableWeakDictionary()<JDDictionaryDeallocWrapperDelegate>
+@interface JDMutableWeakDictionary()<JDDictionaryWeakReferenceWrapperDelegate>
 
 @end
 
 @implementation JDMutableWeakDictionary {
-    NSMutableDictionary *_weakDictionary;
+    NSMutableDictionary<id<NSCopying>,JDDictionaryWeakReferenceWrapper *> *_weakDictionary;
 }
 
 + (instancetype)standardWeakDictionary {
@@ -88,7 +88,7 @@
 }
 
 - (void)setObject:(id)object forKey:(id)key {
-    JDDictionaryDeallocWrapper *wrapper = [[JDDictionaryDeallocWrapper alloc] initWithWeakObject:object forKey:key delegate:self];
+    JDDictionaryWeakReferenceWrapper *wrapper = [[JDDictionaryWeakReferenceWrapper alloc] initWithWeakObject:object forKey:key delegate:self];
     [_weakDictionary setObject:wrapper forKey:key];
 }
 

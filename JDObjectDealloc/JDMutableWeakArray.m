@@ -9,24 +9,24 @@
 #import "JDMutableWeakArray.h"
 #import "NSObject+JDDeallocBlock.h"
 
-@protocol JDArrayDeallocWrapperDelegate <NSObject>
+@protocol JDArrayWeakReferenceWrapperDelegate <NSObject>
 - (void)objectWillDealloc:(id)object;
 @end
 
-@interface JDArrayDeallocWrapper : NSObject
-@property (nonatomic, weak) id<JDArrayDeallocWrapperDelegate> delegate;
+@interface JDArrayWeakReferenceWrapper : NSObject
+@property (nonatomic, weak) id<JDArrayWeakReferenceWrapperDelegate> delegate;
 @property (nonatomic, weak) id object;
 - (instancetype)initWithWeakObject:(id)object
-                          delegate:(id<JDArrayDeallocWrapperDelegate>)delegate;
+                          delegate:(id<JDArrayWeakReferenceWrapperDelegate>)delegate;
 @end
 
-@implementation JDArrayDeallocWrapper
+@implementation JDArrayWeakReferenceWrapper
 - (instancetype)initWithWeakObject:(id)object
-                          delegate:(id<JDArrayDeallocWrapperDelegate>)delegate {
+                          delegate:(id<JDArrayWeakReferenceWrapperDelegate>)delegate {
     if (self = [super init]) {
         self.object = object;
         self.delegate = delegate;
-        __weak JDArrayDeallocWrapper *weakSelf = self;
+        __weak JDArrayWeakReferenceWrapper *weakSelf = self;
         [self.object jd_executeAtDealloc:^{
             if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(objectWillDealloc:)]) {
                 [weakSelf.delegate objectWillDealloc:weakSelf];
@@ -38,9 +38,9 @@
 @end
 
 
-@interface JDMutableWeakArray()<JDArrayDeallocWrapperDelegate>
+@interface JDMutableWeakArray()<JDArrayWeakReferenceWrapperDelegate>
 
-@property (nonatomic, strong) NSMutableArray<JDArrayDeallocWrapper *> *weakArray;
+@property (nonatomic, strong) NSMutableArray<JDArrayWeakReferenceWrapper *> *weakArray;
 
 @end
 
@@ -85,19 +85,19 @@
 
 
 - (void)addObject:(id)object {
-    JDArrayDeallocWrapper *wrapper = [[JDArrayDeallocWrapper alloc] initWithWeakObject:object delegate:self];
+    JDArrayWeakReferenceWrapper *wrapper = [[JDArrayWeakReferenceWrapper alloc] initWithWeakObject:object delegate:self];
     [_weakArray addObject:wrapper];
 }
 
 - (void)addObjectsFromArray:(NSArray *)otherArray {
     [otherArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        JDArrayDeallocWrapper *wrapper = [[JDArrayDeallocWrapper alloc] initWithWeakObject:obj delegate:self];
+        JDArrayWeakReferenceWrapper *wrapper = [[JDArrayWeakReferenceWrapper alloc] initWithWeakObject:obj delegate:self];
         [_weakArray addObject:wrapper];
     }];
 }
 
 - (void)insertObject:(id)anObject atIndex:(NSUInteger)index {
-    JDArrayDeallocWrapper *wrapper = [[JDArrayDeallocWrapper alloc] initWithWeakObject:anObject delegate:self];
+    JDArrayWeakReferenceWrapper *wrapper = [[JDArrayWeakReferenceWrapper alloc] initWithWeakObject:anObject delegate:self];
     [_weakArray insertObject:wrapper atIndex:index];
 }
 
@@ -106,7 +106,7 @@
 }
 
 - (void)replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject {
-    JDArrayDeallocWrapper *wrapper = [[JDArrayDeallocWrapper alloc] initWithWeakObject:anObject delegate:self];
+    JDArrayWeakReferenceWrapper *wrapper = [[JDArrayWeakReferenceWrapper alloc] initWithWeakObject:anObject delegate:self];
     [_weakArray replaceObjectAtIndex:index withObject:wrapper];
 }
 
@@ -115,7 +115,7 @@
 }
 
 - (void)removeObject:(id)object {
-    NSUInteger index = [_weakArray indexOfObjectPassingTest:^BOOL(JDArrayDeallocWrapper  *_Nonnull obj, __unused NSUInteger idx, __unused BOOL * _Nonnull stop) {
+    NSUInteger index = [_weakArray indexOfObjectPassingTest:^BOOL(JDArrayWeakReferenceWrapper  *_Nonnull obj, __unused NSUInteger idx, __unused BOOL * _Nonnull stop) {
         return obj.object == object;
     }];
     if (index != NSNotFound) {
