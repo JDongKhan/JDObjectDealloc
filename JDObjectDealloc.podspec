@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
     s.requires_arc = true
 
 
-    s.source_files = 'JDObjectDealloc/JDObjectDealloc/**/*.{h,m}'
-    s.public_header_files = 'JDObjectDealloc/JDObjectDealloc/**/*.h'
+    s.source_files = 'JDObjectDealloc/**/*.{h,m}'
+    s.public_header_files = 'JDObjectDealloc/**/*.h'
 
 end

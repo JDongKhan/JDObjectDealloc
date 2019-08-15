@@ -1,0 +1,6 @@
+framework module JDObjectDealloc {
+  umbrella header "JDObjectDealloc-umbrella.h"
+
+  export *
+  module * { export * }
+}
