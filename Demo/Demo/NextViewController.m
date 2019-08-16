@@ -20,6 +20,8 @@ static int i = 0;
 
 @property (nonatomic, strong) NSPointerArray *weakPointerArray;
 
+@property (nonatomic, strong) NSHashTable *weakHashTable;
+
 @end
 
 @implementation NextViewController
@@ -36,11 +38,7 @@ static int i = 0;
     
     self.normalArray = [NSMutableArray array];
     self.weakPointerArray = [NSPointerArray weakObjectsPointerArray];
-    
-    [NSHashTable weakObjectsHashTable];
-    [NSPointerArray weakObjectsPointerArray];
-    [NSPointerArray pointerArrayWithOptions:NSPointerFunctionsWeakMemory];
-    [NSMapTable weakToWeakObjectsMapTable];;
+    self.weakHashTable = [NSHashTable weakObjectsHashTable];
     // Do any additional setup after loading the view.
 }
 
@@ -48,15 +46,18 @@ static int i = 0;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         @autoreleasepool {
-            [self.normalArray removeAllObjects];
+            [self.weakHashTable removeAllObjects];
             CFAbsoluteTime startTime = CFAbsoluteTimeGetCurrent();
             for (NSInteger i = 0 ; i < 100000; i++) {
-                  NSObject *lable = [[NSObject alloc] init];
-                [self.normalArray addObject:lable];
+                NSObject *lable = [[NSObject alloc] init];
+                [self.weakHashTable addObject:lable];
+                if (i % 2 == 0) {
+                    [self.normalArray addObject:lable];
+                }
             }
             CFAbsoluteTime endTime = CFAbsoluteTimeGetCurrent() - startTime;
 
-            NSLog(@"count:%ld,runtime:%f",self.normalArray.count,endTime);
+            NSLog(@"count:%ld,runtime:%f",self.weakHashTable.count,endTime);
         }
     });
     
