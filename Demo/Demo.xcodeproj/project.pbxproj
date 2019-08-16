@@ -15,7 +15,6 @@
 		69FC319023040ABA001E31F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69FC318E23040ABA001E31F8 /* LaunchScreen.storyboard */; };
 		69FC319323040ABA001E31F8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FC319223040ABA001E31F8 /* main.m */; };
 		69FC319B23040D76001E31F8 /* NextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FC319A23040D76001E31F8 /* NextViewController.m */; };
-		69FC319E23040E47001E31F8 /* Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FC319D23040E46001E31F8 /* Manager.m */; };
 		69FC31A923050EB6001E31F8 /* TestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FC31A823050EB6001E31F8 /* TestObject.m */; };
 		7E0FC10BE02D4809242F4D94 /* Pods_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0889AD787719BA03313D96C /* Pods_Demo.framework */; };
 /* End PBXBuildFile section */
@@ -36,8 +35,6 @@
 		69FC319223040ABA001E31F8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		69FC319923040D76001E31F8 /* NextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NextViewController.h; sourceTree = "<group>"; };
 		69FC319A23040D76001E31F8 /* NextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NextViewController.m; sourceTree = "<group>"; };
-		69FC319C23040E46001E31F8 /* Manager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Manager.h; sourceTree = "<group>"; };
-		69FC319D23040E46001E31F8 /* Manager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Manager.m; sourceTree = "<group>"; };
 		69FC31A723050EB6001E31F8 /* TestObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestObject.h; sourceTree = "<group>"; };
 		69FC31A823050EB6001E31F8 /* TestObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestObject.m; sourceTree = "<group>"; };
 		A0889AD787719BA03313D96C /* Pods_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,8 +96,6 @@
 				69FC319223040ABA001E31F8 /* main.m */,
 				69FC319923040D76001E31F8 /* NextViewController.h */,
 				69FC319A23040D76001E31F8 /* NextViewController.m */,
-				69FC319C23040E46001E31F8 /* Manager.h */,
-				69FC319D23040E46001E31F8 /* Manager.m */,
 				69FC31A723050EB6001E31F8 /* TestObject.h */,
 				69FC31A823050EB6001E31F8 /* TestObject.m */,
 			);
@@ -230,7 +225,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				69FC319B23040D76001E31F8 /* NextViewController.m in Sources */,
-				69FC319E23040E47001E31F8 /* Manager.m in Sources */,
 				69FC318823040AB7001E31F8 /* ViewController.m in Sources */,
 				69FC31A923050EB6001E31F8 /* TestObject.m in Sources */,
 				69FC318223040AB7001E31F8 /* AppDelegate.m in Sources */,

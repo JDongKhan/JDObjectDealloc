@@ -10,10 +10,7 @@
 #endif
 #endif
 
-#import "JDMutableWeakArray.h"
-#import "JDMutableWeakDictionary.h"
 #import "NSObject+JDDeallocBlock.h"
-#import "NSObject+JDWeakSubstitute.h"
 
 FOUNDATION_EXPORT double JDObjectDeallocVersionNumber;
 FOUNDATION_EXPORT const unsigned char JDObjectDeallocVersionString[];
